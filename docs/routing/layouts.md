@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 ---
+
 # Layout
 
 ## Định nghĩa Layout
@@ -17,7 +18,7 @@ sidebar_position: 2
 
 ![1724135898608](image/layouts/1724135898608.png)
 
-```tsx
+```tsx title="app/dashboard/layout.js"
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }: {
@@ -42,7 +43,7 @@ export default function DashboardLayout({
 
 :::
 
-```tsx
+```tsx title="app/layout.js"
 export default function RootLayout({
   children,
 }: {
@@ -67,7 +68,7 @@ export default function RootLayout({
 
 ![1724136913638](image/layouts/1724136913638.png)
 
-```tsx
+```tsx title="app/dashboard/layout.js"
 export default function DashboardLayout({
   children,
 }: {

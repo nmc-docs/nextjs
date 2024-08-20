@@ -26,6 +26,6 @@ sidebar_position: 3
 
 ## Chọn các route cụ thể được layout áp dụng vào
 
-- Trong ví dụ dưới đây, ta tạo một route group **(shop)**, bỏ page **account** và **cart** vào route group đó để sử dụng chung layout, còn page **checkout** không muốn sử dụng chung layout thì bỏ ra ngoài route group:
+- Trong ví dụ dưới đây, ta tạo một route group **(shop)**, URL **/account** và **/cart** sẽ sử dụng chung layout, còn URL **/checkout** không muốn sử dụng chung layout thì bỏ ra ngoài route group:
 
 ![1724140095546](image/route-groups/1724140095546.png)
