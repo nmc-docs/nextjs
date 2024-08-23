@@ -4,7 +4,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 const config = {
   title: "NextJS",
   tagline: "Dinosaurs are cool",
-  favicon: "img/logo.svg",
+  favicon: "img/logo.png",
   url: "https://github.com",
   baseUrl: "/nextjs/",
   organizationName: "nmc-docs",
@@ -41,7 +41,7 @@ const config = {
         title: "NextJS",
         logo: {
           alt: "My Site Logo",
-          src: "img/logo.svg",
+          src: "img/logo.png",
         },
         items: [
           {
