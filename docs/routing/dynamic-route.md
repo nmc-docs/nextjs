@@ -12,7 +12,7 @@ sidebar_position: 4
 
 - Ví dụ, một blog có thể bao gồm route sau đây: **app/blog/[slug]/page.js**. Trong đó, **[slug]** là dynamic segment cho các bài viết của blog
 
-```tsx
+```tsx title="app/blog/[slug]/page.tsx"
 export default function Page({ params }: { params: { slug: string } }) {
   return <div>My Post: {params.slug}</div>;
 }
@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 - Đối với mỗi [server component](../rendering#server-component), nó nhận một props tên **params** chứa tất cả các params của route:
 
-```ts
+```ts title="app/blog/[slug]/page.tsx"
 export default function Page({ params }: { params: { slug: string } }) {
   return <div>My Post: {params.slug}</div>;
 }

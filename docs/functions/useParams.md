@@ -12,7 +12,7 @@ sidebar_position: 3
 
 - Ví dụ:
 
-```ts
+```ts title="app/shop/[tag]/[item]/page.tsx"
 "use client";
 
 import { useParams } from "next/navigation";
