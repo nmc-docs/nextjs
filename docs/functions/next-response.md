@@ -6,11 +6,11 @@ sidebar_position: 9
 
 ## Static methods
 
-| NextResponse static method | Description                                                                                                               |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `NextResponse.json()`      | Hàm trả về dữ liệu cho client, có thể đính kèm các thông tin bên trong header                                             |
-| `NextResponse.redirect()`  | Điều hướng đến 1 URL mới.                                                                                                 |
-| `NextResponse.next()`      | Được sử dụng chủ yếu ở middleware. Ta có thể modify thông tin header và chuyển request đến bộ tiếp nhận phía sau để xử lý |
+| NextResponse static method | Description                                                                                                                    |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `NextResponse.json()`      | Hàm trả về dữ liệu cho client, có thể đính kèm các thông tin bên trong header                                                  |
+| `NextResponse.redirect()`  | Điều hướng đến 1 URL mới. Hàm này nhận 1 tham số là đối tượng [URL](https://nmc-docs.github.io/javascript/built-in-object/URL) |
+| `NextResponse.next()`      | Được sử dụng chủ yếu ở middleware. Ta có thể modify thông tin header và chuyển request đến bộ tiếp nhận phía sau để xử lý      |
 
 ## Ví dụ
 
