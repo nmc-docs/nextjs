@@ -45,7 +45,7 @@ const config = {
         },
         items: [
           {
-            href: "https://github.com/minhchi1509",
+            href: "https://github.com/nmc-docs/nextjs",
             label: "GitHub",
             position: "right",
           },
