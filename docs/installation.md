@@ -26,4 +26,4 @@ What import alias would you like configured? @/*
 
 ## Thiết lập lại ESLint + Prettier + Husky + Lint-staged
 
-Xem cách cài đặt ESLint, Prettier: [tại đây](https://nmc-docs.github.io/eslint-prettier/setting)
+Xem cách cài đặt ESLint, Prettier: [tại đây](https://nmc-docs.github.io/eslint-prettier/setting/nextjs-setup)
