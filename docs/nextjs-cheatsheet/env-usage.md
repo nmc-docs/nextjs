@@ -7,7 +7,7 @@ sidebar_position: 1
 - **Bước 1:** Tạo file `.env`
 - **Bước 2**: Vào file: `next.config.js`
 
-```js
+```js title="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
