@@ -43,6 +43,9 @@ fetch(`https://...`, { cache: "force-cache" | "no-store" });
 
 - Từ NextJS version 15 trở đi, giá trị `"no-store"` là giá trị mặc định.
 - Từ NextJS version 14 trở về trước, giá trị mặc định là `"force-cache"`.
+- `fetch` sẽ không cache dữ liệu khi:
+  - Nó được sử dụng ở [Server Action](../data-fetching/server-actions)
+  - Nó được sử dụng ở [Route Handler](../routing/route-handlers) (phương thức POST)
 
 :::
 
@@ -66,6 +69,11 @@ fetch(`https://...`, { next: { revalidate: false | 0 | number } });
   - `next.revalidate = 0` tương đương với `cache = "no-store"`
   - `next.revalidate = number` thì tự động `cache = "force-cache"`
 - Sẽ xảy ra conflict nếu ta thiết lập như sau: `{ revalidate: 3600, cache: 'no-store' }`
+- Ngoài ra, để revalidate tất cả các fetch requests trong một route, ta làm như sau:
+
+```tsx title="layout.tsx | page.tsx | route.ts"
+export const revalidate = 3600; // revalidate at most every hour
+```
 
 :::
 
@@ -85,7 +93,7 @@ fetch(`https://...`, { next: { tags: ["collection"] } });
 
 ## Ví dụ
 
-```ts
+```tsx
 export default async function Page() {
   // This request should be cached until manually invalidated.
   // Similar to `getStaticProps`.
