@@ -4,41 +4,81 @@ sidebar_position: 1
 
 # Sử dụng biến môi trường
 
-- **Bước 1:** Tạo file `.env`
-- **Bước 2**: Vào file: `next.config.js`
+- **Bước 1**: Cài đặt thư viện để validate biến môi trường:
 
-```js title="next.config.js"
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: "standalone",
-  reactStrictMode: false,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  env: {
-    API_URL: process.env.API_URL,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    SECRET_KEY: process.env.SECRET_KEY,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-  },
-};
-module.exports = nextConfig;
+```bash
+npm install @t3-oss/env-nextjs zod
 ```
 
-- Bước 3: Sử dụng biến môi trường ở bất kỳ đâu (client + server side):
+- **Bước 2**: Tạo file cấu hình biến môi trường:
 
-```tsx title="app/page.tsx"
-"use client";
+```ts title="src/config/env.config.ts"
+import { createEnv } from "@t3-oss/env-nextjs";
+import { z } from "zod";
 
-const HomePage = () => {
-  return (
-    <>
-      <p>{process.env.GOOGLE_CLIENT_ID}</p>
-    </>
-  );
+export const env = createEnv({
+  server: {
+    NEXTAUTH_SECRET: z.string().min(1),
+    NEXTAUTH_URL: z.string().url(),
+    GOOGLE_CLIENT_ID: z.string().min(1),
+    GOOGLE_CLIENT_SECRET: z.string().min(1),
+  },
+  client: {
+    NEXT_PUBLIC_API_URL: z.string().url(),
+  },
+  experimental__runtimeEnv: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
+});
+```
+
+:::note
+
+- Ta chia ra 2 loại gồm biến môi trường chỉ truy cập được ở server, và biến môi trường truy cập được cả ở client và server (bắt đầu bằng prefix **NEXT_PUBLIC**)
+- Lưu ý rằng ta phải destructure tất biến môi trường client vào `experimental__runtimeEnv`
+
+:::
+
+:::caution
+
+- Nếu trong file next.config.ts, ta chỉ định output: standalone, thì ta thêm như sau:
+
+```ts title="next.config.ts"
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: "standalone",
+  // Add the packages in transpilePackages
+  transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core"],
 };
 
-export default HomePage;
+export default nextConfig;
+```
+
+:::
+
+- Cuối cùng, ta có thể sử dụng biến môi trường như sau:
+
+```ts title="some-api-endpoint.ts"
+import { env } from "~/env"; // On server
+
+export const GET = async () => {
+  // do fancy ai stuff
+  const magic = await fetch("...", {
+    headers: { Authorization: env.OPEN_AI_API_KEY },
+  });
+  // ...
+};
+```
+
+```tsx title="some-component.tsx"
+import { env } from "~/env"; // On client - same import!
+
+export const SomeComponent = () => {
+  return (
+    <SomeProvider publishableKey={env.PUBLIC_PUBLISHABLE_KEY}>
+      {/* ... */}
+    </SomeProvider>
+  );
+};
 ```
