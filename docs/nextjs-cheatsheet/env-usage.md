@@ -41,7 +41,7 @@ export const env = createEnv({
 
 :::caution
 
-- Nếu trong file next.config.ts, ta chỉ định output: standalone, thì ta thêm như sau:
+- Nếu trong file **next.config.ts**, ta chỉ định `output: standalone`, thì ta thêm như sau:
 
 ```ts title="next.config.ts"
 import type { NextConfig } from "next";
