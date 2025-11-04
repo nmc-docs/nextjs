@@ -13,8 +13,13 @@ sidebar_position: 4
 - Ví dụ, một blog có thể bao gồm route sau đây: **app/blog/[slug]/page.js**. Trong đó, **[slug]** là dynamic segment cho các bài viết của blog
 
 ```tsx title="app/blog/[slug]/page.tsx"
-export default function Page({ params }: { params: { slug: string } }) {
-  return <div>My Post: {params.slug}</div>;
+export default function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  return <div>My Post: {slug}</div>;
 }
 ```
 
