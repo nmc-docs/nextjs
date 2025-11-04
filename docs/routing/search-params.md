@@ -8,15 +8,22 @@ sidebar_position: 8
 
 - Trong mỗi [server component](../rendering#server-component), nó nhận một props tên là **searchParams** chứa tât cả các search params của page:
 
-```tsx
-export default function Page({
-  params,
+```tsx title="app/shop/page.tsx"
+export default async function Page({
   searchParams,
 }: {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  return <h1>My Page</h1>;
+  const { page = "1", sort = "asc", query = "" } = await searchParams;
+
+  return (
+    <div>
+      <h1>Product Listing</h1>
+      <p>Search query: {query}</p>
+      <p>Current page: {page}</p>
+      <p>Sort order: {sort}</p>
+    </div>
+  );
 }
 ```
 

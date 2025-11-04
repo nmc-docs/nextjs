@@ -15,7 +15,7 @@ sidebar_position: 11
 import { headers } from "next/headers";
 
 export default function Page() {
-  const headersList = headers();
+  const headersList = await headers();
   const referer = headersList.get("referer");
 
   return <div>Referer: {referer}</div>;
@@ -27,7 +27,7 @@ import { Suspense } from "react";
 import { headers } from "next/headers";
 
 async function User() {
-  const authorization = headers().get("authorization");
+  const authorization = await headers().get("authorization");
   const res = await fetch("...", {
     headers: { authorization }, // Forward the authorization header
   });

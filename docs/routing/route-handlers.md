@@ -34,17 +34,18 @@ sidebar_position: 9
 
 - Tạo phương thức **GET** với endpoint **/api/user**:
 
-```ts title="app/api/user/route.ts"
+```ts title="app/users/[id]/route.ts"
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest, res: NextResponse) => {
-  return NextResponse.json({ message: "Ok" });
-};
+export async function GET(_req: NextRequest, ctx: RouteContext<"/users/[id]">) {
+  const { id } = await ctx.params;
+  return NextResponse.json({ id });
+}
 ```
 
 :::note
 
-- Với mỗi hàm ta định nghĩa tương ứng với method cho endpoint, nó nhận 2 tham số là [NextRequest](../functions/next-request) và [NextResponse](../functions/next-response), tương ứng với đối tượng request nhận được và response trả về.
+- Với mỗi hàm ta định nghĩa tương ứng với method cho endpoint, nó nhận 2 tham số là [NextRequest](../functions/next-request) và `RouteContext`.
 
 :::
 
@@ -59,16 +60,19 @@ import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
   //Cách 1
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const token = cookieStore.get("token");
 
   //Cách 2
   const token = request.cookies.get("token");
 
-  return new Response("Hello, Next.js!", {
-    status: 200,
-    headers: { "Set-Cookie": `token=${token.value}` },
-  });
+  return NextResponse.json(
+    { message: "Hello, Next.js!" },
+    {
+      status: 200,
+      headers: { "Set-Cookie": `token=${token.value}` },
+    }
+  );
 }
 ```
 
@@ -81,16 +85,19 @@ import { headers } from "next/headers";
 
 export async function GET(request: Request) {
   // Cách 1
-  const headersList = headers();
+  const headersList = await headers();
   const referer = headersList.get("referer");
 
   // Cách 2
   const requestHeaders = new Headers(request.headers);
 
-  return new Response("Hello, Next.js!", {
-    status: 200,
-    headers: { referer: referer },
-  });
+  return NextResponse.json(
+    { message: "Hello, Next.js!" },
+    {
+      status: 200,
+      headers: { referer: referer },
+    }
+  );
 }
 ```
 
@@ -111,9 +118,9 @@ export async function GET(request: Request) {
 ```ts title="app/items/[slug]/route.ts"
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  ctx: RouteContext<"/items/[slug]">
 ) {
-  const slug = params.slug; // 'a', 'b', or 'c'
+  const { slug } = await ctx.params;
 }
 ```
 
@@ -136,7 +143,7 @@ export function GET(request: NextRequest) {
 ```ts title="app/items/route.ts"
 export async function POST(request: Request) {
   const res = await request.json();
-  return Response.json({ res });
+  return NextResponse.json({ res });
 }
 ```
 
@@ -147,7 +154,7 @@ export async function POST(request: Request) {
   const formData = await request.formData();
   const name = formData.get("name");
   const email = formData.get("email");
-  return Response.json({ name, email });
+  return NextResponse.json({ name, email });
 }
 ```
 
@@ -155,13 +162,16 @@ export async function POST(request: Request) {
 
 ```ts title="app/api/route.ts"
 export async function GET(request: Request) {
-  return new Response("Hello, Next.js!", {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    },
-  });
+  return NextResponse.json(
+    { message: "Hello, Next.js!" },
+    {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    }
+  );
 }
 ```

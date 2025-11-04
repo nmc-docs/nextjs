@@ -1,6 +1,7 @@
 ---
 sidebar_position: 10
 ---
+
 # cookies()
 
 :::info
@@ -14,12 +15,12 @@ sidebar_position: 10
 - Lấy giá trị cookies theo key, nếu không tồn tại, trả về `undefined`:
 
 ```tsx
-import { cookies } from 'next/headers'
- 
+import { cookies } from "next/headers";
+
 export default function Page() {
-  const cookieStore = cookies()
-  const theme = cookieStore.get('theme')
-  return '...'
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("theme");
+  return "...";
 }
 ```
 
@@ -28,16 +29,16 @@ export default function Page() {
 - Lấy tất cả các giá trị của cookies:
 
 ```ts
-import { cookies } from 'next/headers'
- 
+import { cookies } from "next/headers";
+
 export default function Page() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies();
   return cookieStore.getAll().map((cookie) => (
     <div key={cookie.name}>
       <p>Name: {cookie.name}</p>
       <p>Value: {cookie.value}</p>
     </div>
-  ))
+  ));
 }
 ```
 
@@ -46,12 +47,12 @@ export default function Page() {
 - Kiểm tra xem tên của một cookie có tồn tại hay không. Trả về `true` hoặc `false`
 
 ```ts
-import { cookies } from 'next/headers'
- 
+import { cookies } from "next/headers";
+
 export default function Page() {
-  const cookieStore = cookies()
-  const hasCookie = cookieStore.has('theme')
-  return '...'
+  const cookieStore = await cookies();
+  const hasCookie = cookieStore.has("theme");
+  return "...";
 }
 ```
 
@@ -60,21 +61,21 @@ export default function Page() {
 - Hàm set cookie:
 
 ```ts
-'use server'
- 
-import { cookies } from 'next/headers'
- 
+"use server";
+
+import { cookies } from "next/headers";
+
 async function create(data) {
-  cookies().set('name', 'lee')
+  cookies().set("name", "lee");
   // or
-  cookies().set('name', 'lee', { secure: true })
+  cookies().set("name", "lee", { secure: true });
   // or
   cookies().set({
-    name: 'name',
-    value: 'lee',
+    name: "name",
+    value: "lee",
     httpOnly: true,
-    path: '/',
-  })
+    path: "/",
+  });
 }
 ```
 
@@ -84,9 +85,9 @@ async function create(data) {
 
 ```ts
 'use server'
- 
+
 import { cookies } from 'next/headers'
- 
+
 async function delete(data) {
   cookies().delete('name')
 }

@@ -21,3 +21,14 @@ sidebar_position: 1
 - Ở ảnh bên trên, URL `/dashboard/analytics` sẽ không truy cập được vì trong thư mục đó không có file **page.tsx**. Folder này sẽ thường được sử dụng để lưu trữ các components, stylesheets, images,...
 
 :::
+
+## Private folders
+
+:::info
+
+- Thư mục private có thể được tạo bằng cách thêm `_` trước tên folder, ví dụ: `_folderName`
+- Điều này sẽ báo cho NextJS biết thư mục đó không được định tuyến, ta có thể tạo các thư mục chứa utils, component,...
+
+:::
+
+![1762262591481](image/route-definition/1762262591481.png)

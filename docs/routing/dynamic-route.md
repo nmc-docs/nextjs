@@ -27,8 +27,20 @@ export default function Page({ params }: { params: { slug: string } }) {
 - Đối với mỗi [server component](../rendering#server-component), nó nhận một props tên **params** chứa tất cả các params của route:
 
 ```ts title="app/blog/[slug]/page.tsx"
-export default function Page({ params }: { params: { slug: string } }) {
-  return <div>My Post: {params.slug}</div>;
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
+    </div>
+  );
 }
 ```
 

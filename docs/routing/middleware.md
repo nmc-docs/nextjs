@@ -2,44 +2,44 @@
 sidebar_position: 10
 ---
 
-# Middleware
+# Proxy (Middleware)
 
-## Middleware để làm gì?
+## Proxy (Middleware) để làm gì?
 
 :::info
 
-- Trong NextJS, Middleware sẽ được thực hiện trước khi vào một route. Ở đây ta có thể điều chỉnh response như redirect, rewriting, thay đổi request/response headers.
-- Middleware sẽ được chỉ định đối với những route mà nó match (ta tự định nghĩa).
+- Trong NextJS, Proxy (Middleware) sẽ được thực hiện trước khi vào một route. Ở đây ta có thể điều chỉnh response như redirect, rewriting, thay đổi request/response headers.
+- Proxy (Middleware) sẽ được chỉ định đối với những route mà nó match (ta tự định nghĩa).
 - Một số use case mà áp dụng middleware:
 
-  - Xác thực và phân quyền: Ta có thể sử dụng middleware để kiểm tra xem user có được truy cập vào một private route hay một route mà được phân quyền hay không. Nếu không ta có thể redirect về trang đăng nhập,...
+  - Xác thực và phân quyền: Ta có thể sử dụng Proxy (Middleware) để kiểm tra xem user có được truy cập vào một private route hay một route mà được phân quyền hay không. Nếu không ta có thể redirect về trang đăng nhập,...
   - Phát hiện bot: Bảo vệ route bằng cách bảo vệ và chặn các bot xâm nhập trái phép vào trang web.
 
 :::
 
 :::note
 
-- Một số lưu ý với middleware:
-  - Middleware không nên xử lý các tác vụ nặng hoặc tiêu tốn nhiều tài nguyên, vì middleware sẽ được chạy mỗi khi ta đi đến một route.
-  - Middleware có thể thực hiện các thao tác server-side nhưng ta không nên thực hiện các thao tác trực tiếp với database.
+- Một số lưu ý với Proxy (Middleware):
+  - Proxy (Middleware) không nên xử lý các tác vụ nặng hoặc tiêu tốn nhiều tài nguyên, vì Proxy (Middleware) sẽ được chạy mỗi khi ta đi đến một route.
+  - Proxy (Middleware) có thể thực hiện các thao tác server-side nhưng ta không nên thực hiện các thao tác trực tiếp với database.
 
 :::
 
-## Tạo middleware
+## Tạo Proxy (Middleware)
 
 :::info
 
-- Ta tạo file **middleware.ts** ở cấp cao nhất bên trong thư mục src (cùng cấp với thư mục **app**)
-- Ở trong file này, ta `export function middleware`, hàm này nhận 1 tham số có kiểu [NextRequest](../functions/next-request) chứa thông tin request. Ở trong hàm này ta có thể sử dụng [NextResponse](../functions/next-response) để hỗ trợ việc điều hướng.
+- Ta tạo file **proxy.ts** ở cấp cao nhất bên trong thư mục src (cùng cấp với thư mục **app**)
+- Ở trong file này, ta `export function proxy`, hàm này nhận 1 tham số có kiểu [NextRequest](../functions/next-request) chứa thông tin request. Ở trong hàm này ta có thể sử dụng [NextResponse](../functions/next-response) để hỗ trợ việc điều hướng.
 
 :::
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   return NextResponse.redirect(new URL("/home", request.url));
 }
 
@@ -49,18 +49,18 @@ export const config = {
 };
 ```
 
-- Ở ví dụ trên, ta tạo middleware chỉ áp dụng đối với các route **"/about/\*"**, khi user vào route này thì sẽ bị redirect về route **"/home"**
+- Ở ví dụ trên, ta tạo Proxy (Middleware) chỉ áp dụng đối với các route **"/about/\*"**, khi user vào route này thì sẽ bị redirect về route **"/home"**
 
 ## Matching Paths
 
 :::info
 
-- Mặc định, middleware sẽ áp dụng cho tất cả các route trong app, do đó, ta cần cấu hình `matcher` để chỉ áp dụng middleware đối với một số route cụ thể.
-- Để tạo matcher, ta `export` một `config` ở file **middleware.ts**
+- Mặc định, Proxy (Middleware) sẽ áp dụng cho tất cả các route trong app, do đó, ta cần cấu hình `matcher` để chỉ áp dụng Proxy (Middleware) đối với một số route cụ thể.
+- Để tạo matcher, ta `export` một `config` ở file **proxy.ts**
 
 :::
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 export const config = {
   matcher: "/about/:path*",
 };
@@ -68,7 +68,7 @@ export const config = {
 
 - Ta có thể chỉ định một hoặc nhiều path:
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 export const config = {
   matcher: ["/about/:path*", "/dashboard/:path*"],
 };
@@ -76,7 +76,7 @@ export const config = {
 
 - `matcher` cũng có hỗ trợ regex:
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 export const config = {
   matcher: [
     /*
@@ -104,7 +104,7 @@ export const config = {
 
 - Điều hướng có điều kiện:
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -121,7 +121,7 @@ export function middleware(request: NextRequest) {
 
 - Thao tác với cookies:
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -155,7 +155,7 @@ export function middleware(request: NextRequest) {
 
 - Thao tác với headers:
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -180,7 +180,7 @@ export function middleware(request: NextRequest) {
 
 - Xử lý CORS khi gọi đến các API:
 
-```ts title="src/middleware.ts"
+```ts title="src/proxy.ts"
 import { NextRequest, NextResponse } from "next/server";
 
 const allowedOrigins = ["https://acme.com", "https://my-app.org"];
